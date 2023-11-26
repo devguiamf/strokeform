@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(top: 20),
                         child: const Text(
-                          "Bem vindo ao AVC Form",
+                          "Bem vindo ao Stroke Form",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,

@@ -128,7 +128,7 @@ class InitialApp extends StatelessWidget {
       '/': (context) => LoginPage(),
       '/home': (context) => const HomePage(),
       '/form-patient': (context) => const FormPage(),
-      '/historico': (context) => const PatientHistoryScreen(),
+      '/historico': (context) => PatientList(),
       },
     );
   }

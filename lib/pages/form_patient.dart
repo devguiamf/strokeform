@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:avc_form/pages/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -466,7 +468,7 @@ class _FormPatientPageState extends State<FormPatientPage> {
   }
 
   Future postData() async {
-    Uri url = Uri.parse('https://avcform.azurewebsites.net/predict');
+    Uri url = Uri.parse('https://strokeform.azurewebsites.net/predict');
 
     final Map<String, dynamic> data = {
       'gender': _genderController.text,
@@ -479,9 +481,15 @@ class _FormPatientPageState extends State<FormPatientPage> {
       'heart_disease': _heartDiseaseController.text,
       'avg_glucose_level': _avgGlucoseLevelController.text,
       'bmi': _bmiController.text,
+      'name': _fullNameController.text,
+      'phone': _phoneController.text,
     };
 
     String requestBody = convert.jsonEncode(data);
+
+    if (kDebugMode) {
+      print(requestBody);
+    }
 
     try {
       final response = await http.post(
@@ -493,21 +501,25 @@ class _FormPatientPageState extends State<FormPatientPage> {
       );
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> resultForm = convert.jsonDecode(response.body);
-        if (resultForm['class'] == 1) {
-          _mesagem = 'O Paciente ${_fullNameController.text} apresenta predisposição a AVC.';
+        final teste = convert.jsonDecode(response.body);
+
+        if (teste == 1) {
+          _mesagem =
+              'O Paciente ${_fullNameController.text} apresenta predisposição a AVC.';
+          _exibirAlerta(context);
         } else {
           _mesagem =
               'O Paciente ${_fullNameController.text} não apresenta predisposição a AVC.';
+
+          _exibirAlerta(context);
         }
         // ignore: use_build_context_synchronously
-        _exibirAlerta(context);
       }
     } catch (e) {
       print('Erro na requisição POST: $e');
     }
   }
- 
+
   void _exibirAlerta(BuildContext context) {
     const msg = '';
     showDialog(

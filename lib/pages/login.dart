@@ -46,7 +46,7 @@ class LoginPage extends StatelessWidget {
                     const Positioned(
                         child: Center(
                           child: Text(
-                            "AVC Form",
+                            "Stroke Form",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 40,
